@@ -14,7 +14,12 @@
     <meta name="description" content="此教程源于郭霖的《第一行代码–Android》中关于Git的教程，简单实用，故总结一下。
 Git入门安装Git
 Linux打开shell界面
-sudo apt-get install git-core">
+
+1sudo apt-get install git-core
+创建代码仓库
+1.配置身份
+
+git config –global user.name “zxsong”git config –global user.email “zxsong13@gmail">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git简明教程">
 <meta property="og:url" content="http://xuesongzh.github.io/2015/12/23/Git简明教程/index.html">
@@ -22,14 +27,24 @@ sudo apt-get install git-core">
 <meta property="og:description" content="此教程源于郭霖的《第一行代码–Android》中关于Git的教程，简单实用，故总结一下。
 Git入门安装Git
 Linux打开shell界面
-sudo apt-get install git-core">
-<meta property="og:updated_time" content="2015-12-23T13:03:51.537Z">
+
+1sudo apt-get install git-core
+创建代码仓库
+1.配置身份
+
+git config –global user.name “zxsong”git config –global user.email “zxsong13@gmail">
+<meta property="og:updated_time" content="2015-12-23T13:10:52.726Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git简明教程">
 <meta name="twitter:description" content="此教程源于郭霖的《第一行代码–Android》中关于Git的教程，简单实用，故总结一下。
 Git入门安装Git
 Linux打开shell界面
-sudo apt-get install git-core">
+
+1sudo apt-get install git-core
+创建代码仓库
+1.配置身份
+
+git config –global user.name “zxsong”git config –global user.email “zxsong13@gmail">
 
     
     <link rel="alternative" href="/atom.xml" title="zxsong&#39;s blog" type="application/atom+xml">
@@ -101,19 +116,16 @@ sudo apt-get install git-core">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git入门"><span class="toc-number">1.</span> <span class="toc-text">Git入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Git"><span class="toc-number">1.1.</span> <span class="toc-text">安装Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建代码仓库"><span class="toc-number">1.2.</span> <span class="toc-text">创建代码仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提交本地代码"><span class="toc-number">1.3.</span> <span class="toc-text">提交本地代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git进阶"><span class="toc-number">2.</span> <span class="toc-text">Git进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看修改内容"><span class="toc-number">2.1.</span> <span class="toc-text">查看修改内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#撤销未提交的修改"><span class="toc-number">2.2.</span> <span class="toc-text">撤销未提交的修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看提交记录"><span class="toc-number">2.3.</span> <span class="toc-text">查看提交记录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git高级"><span class="toc-number">3.</span> <span class="toc-text">Git高级</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分支的用法"><span class="toc-number">3.1.</span> <span class="toc-text">分支的用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与远程版本库协作"><span class="toc-number">3.2.</span> <span class="toc-text">与远程版本库协作</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git入门"><span class="toc-number">1.</span> <span class="toc-text">Git入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Git"><span class="toc-number">1.0.1.</span> <span class="toc-text">安装Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建代码仓库"><span class="toc-number">1.0.2.</span> <span class="toc-text">创建代码仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提交本地代码"><span class="toc-number">1.0.3.</span> <span class="toc-text">提交本地代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git进阶"><span class="toc-number">2.</span> <span class="toc-text">Git进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看修改内容"><span class="toc-number">2.0.1.</span> <span class="toc-text">查看修改内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销未提交的修改"><span class="toc-number">2.0.2.</span> <span class="toc-text">撤销未提交的修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看提交记录"><span class="toc-number">2.0.3.</span> <span class="toc-text">查看提交记录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git高级"><span class="toc-number">3.</span> <span class="toc-text">Git高级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分支的用法"><span class="toc-number">3.0.1.</span> <span class="toc-text">分支的用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#与远程版本库协作"><span class="toc-number">3.0.2.</span> <span class="toc-text">与远程版本库协作</span></a></li></ol></li></ol></li></ol>
 		
 		</div>
 		
 		<p>此教程源于<a href="http://blog.csdn.net/guolin_blog" target="_blank" rel="external">郭霖</a>的《第一行代码–Android》中关于Git的教程，简单实用，故总结一下。</p>
-<h1 id="Git入门">Git入门</h1><h2 id="安装Git">安装Git</h2><ul>
-<li>Linux<br>打开shell界面<blockquote>
-<p>sudo apt-get install git-core</p>
-</blockquote>
-</li>
+<h1 id="Git入门">Git入门</h1><h3 id="安装Git">安装Git</h3><ul>
+<li>Linux<br>打开shell界面</li>
 </ul>
-<a id="more"></a>
-<h2 id="创建代码仓库">创建代码仓库</h2><ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git-core</span><br></pre></td></tr></table></figure>
+<h3 id="创建代码仓库">创建代码仓库</h3><ul>
 <li><p>1.配置身份</p>
 <blockquote>
 <p>git config –global user.name “zxsong”<br>git config –global user.email “zxsong13@gmail.com”</p>
@@ -126,7 +138,7 @@ sudo apt-get install git-core">
 <p>完成创建代码仓库的操作，此时在项目目录下生成一个隐藏的.git文件夹，这个文件夹就是用来记录本地所有的Git操作的，可以通过<strong>ls-al</strong>命令查看。如果想删除本地仓库，只需删除该文件夹即可。</p>
 </li>
 </ul>
-<h2 id="提交本地代码">提交本地代码</h2><p>代码仓库建立完之后就可以提交代码了，使用<strong>add</strong>和<strong>commit</strong>命令即可。<br><strong>add</strong>—用于把想要提交的代码先添加进来<br><strong>commit</strong>—执行提交操作</p>
+<h3 id="提交本地代码">提交本地代码</h3><p>代码仓库建立完之后就可以提交代码了，使用<strong>add</strong>和<strong>commit</strong>命令即可。<br><strong>add</strong>—用于把想要提交的代码先添加进来<br><strong>commit</strong>—执行提交操作</p>
 <ul>
 <li><p>1.添加文件，输入如下命令</p>
 <blockquote>
@@ -150,7 +162,7 @@ sudo apt-get install git-core">
 <p>一定要通过-m参数来加上提交的描述信息，否则是不合法的。</p>
 </li>
 </ul>
-<h1 id="Git进阶">Git进阶</h1><h2 id="查看修改内容">查看修改内容</h2><ul>
+<h1 id="Git进阶">Git进阶</h1><h3 id="查看修改内容">查看修改内容</h3><ul>
 <li><p>在项目的根目录下输入如下命令</p>
 <blockquote>
 <p>git status</p>
@@ -167,7 +179,7 @@ sudo apt-get install git-core">
 </blockquote>
 </li>
 </ul>
-<h2 id="撤销未提交的修改">撤销未提交的修改</h2><ul>
+<h3 id="撤销未提交的修改">撤销未提交的修改</h3><ul>
 <li><p>未执行 add 命令的文件的撤销，使用 checkout 命令</p>
 <blockquote>
 <p>git checkout src/com/example/providertest/MainActivity.java</p>
@@ -180,7 +192,7 @@ sudo apt-get install git-core">
 <p>此时就可以使用 checkout 命令将修改的内容撤销了。</p>
 </li>
 </ul>
-<h2 id="查看提交记录">查看提交记录</h2><ul>
+<h3 id="查看提交记录">查看提交记录</h3><ul>
 <li><p>使用 log 命令查看历史提交信息</p>
 <blockquote>
 <p>git log</p>
@@ -192,7 +204,7 @@ sudo apt-get install git-core">
 </blockquote>
 </li>
 </ul>
-<h1 id="Git高级">Git高级</h1><h2 id="分支的用法">分支的用法</h2><ul>
+<h1 id="Git高级">Git高级</h1><h3 id="分支的用法">分支的用法</h3><ul>
 <li><p>创建分支<br>创建一个名为version1.0的分支</p>
 <blockquote>
 <p>git branch version1.0</p>
@@ -219,7 +231,7 @@ sudo apt-get install git-core">
 </blockquote>
 </li>
 </ul>
-<h2 id="与远程版本库协作">与远程版本库协作</h2><ul>
+<h3 id="与远程版本库协作">与远程版本库协作</h3><ul>
 <li><p>将远程版本库克隆到本地</p>
 <blockquote>
 <p>git clone <a href="https://github.com/xuesongzh/MyMall.git" target="_blank" rel="external">https://github.com/xuesongzh/MyMall.git</a></p>
@@ -303,7 +315,7 @@ sudo apt-get install git-core">
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git入门"><span class="toc-number">1.</span> <span class="toc-text">Git入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Git"><span class="toc-number">1.1.</span> <span class="toc-text">安装Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建代码仓库"><span class="toc-number">1.2.</span> <span class="toc-text">创建代码仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提交本地代码"><span class="toc-number">1.3.</span> <span class="toc-text">提交本地代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git进阶"><span class="toc-number">2.</span> <span class="toc-text">Git进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看修改内容"><span class="toc-number">2.1.</span> <span class="toc-text">查看修改内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#撤销未提交的修改"><span class="toc-number">2.2.</span> <span class="toc-text">撤销未提交的修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看提交记录"><span class="toc-number">2.3.</span> <span class="toc-text">查看提交记录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git高级"><span class="toc-number">3.</span> <span class="toc-text">Git高级</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分支的用法"><span class="toc-number">3.1.</span> <span class="toc-text">分支的用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与远程版本库协作"><span class="toc-number">3.2.</span> <span class="toc-text">与远程版本库协作</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git入门"><span class="toc-number">1.</span> <span class="toc-text">Git入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Git"><span class="toc-number">1.0.1.</span> <span class="toc-text">安装Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建代码仓库"><span class="toc-number">1.0.2.</span> <span class="toc-text">创建代码仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提交本地代码"><span class="toc-number">1.0.3.</span> <span class="toc-text">提交本地代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git进阶"><span class="toc-number">2.</span> <span class="toc-text">Git进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看修改内容"><span class="toc-number">2.0.1.</span> <span class="toc-text">查看修改内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销未提交的修改"><span class="toc-number">2.0.2.</span> <span class="toc-text">撤销未提交的修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看提交记录"><span class="toc-number">2.0.3.</span> <span class="toc-text">查看提交记录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git高级"><span class="toc-number">3.</span> <span class="toc-text">Git高级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分支的用法"><span class="toc-number">3.0.1.</span> <span class="toc-text">分支的用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#与远程版本库协作"><span class="toc-number">3.0.2.</span> <span class="toc-text">与远程版本库协作</span></a></li></ol></li></ol></li></ol>
  
   </div>
 
