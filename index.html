@@ -90,7 +90,7 @@
 </header>
     <div class="article-content">
         
-        <p>此教程源于<a href="http://blog.csdn.net/guolin_blog" target="_blank" rel="external">郭霖</a>的《第一行代码–Android》中关于Git的教程，简单实用，故总结一下。</p>
+        <p>此教程源于<a href="http://blog.csdn.net/guolin_blog">郭霖</a>的《第一行代码–Android》中关于Git的教程，简单实用，故总结一下。</p>
 <h1 id="Git入门">Git入门</h1><h3 id="安装Git">安装Git</h3><ul>
 <li>Linux<br>打开shell界面<blockquote>
 <p>sudo apt-get install git-core</p>
@@ -98,146 +98,13 @@
 </li>
 </ul>
 <h3 id="创建代码仓库">创建代码仓库</h3><ul>
-<li><p>1.配置身份</p>
-<blockquote>
+<li>1.配置身份<blockquote>
 <p>git config –global user.name “zxsong”<br>git config –global user.email “zxsong13@gmail.com”</p>
-</blockquote>
-</li>
-<li><p>2.创建代码仓库<br>cd命令进入项目的目录下面，输入如下命令</p>
-<blockquote>
-<p>git init </p>
-</blockquote>
-<p>完成创建代码仓库的操作，此时在项目目录下生成一个隐藏的.git文件夹，这个文件夹就是用来记录本地所有的Git操作的，可以通过<strong>ls-al</strong>命令查看。如果想删除本地仓库，只需删除该文件夹即可。</p>
-</li>
-</ul>
-<h3 id="提交本地代码">提交本地代码</h3><p>代码仓库建立完之后就可以提交代码了，使用<strong>add</strong>和<strong>commit</strong>命令即可。<br><strong>add</strong>—用于把想要提交的代码先添加进来<br><strong>commit</strong>—执行提交操作</p>
-<ul>
-<li><p>1.添加文件，输入如下命令</p>
-<blockquote>
-<p>git add AndroidManifest.xml</p>
-</blockquote>
-</li>
-<li><p>2.添加文件夹，输入如下命令</p>
-<blockquote>
-<p>git add src</p>
-</blockquote>
-</li>
-<li><p>3.添加所有文 件，输入如下命令</p>
-<blockquote>
-<p>git add .</p>
-</blockquote>
-</li>
-<li><p>4.提交代码，输入如下命令</p>
-<blockquote>
-<p>git commit -m “First commit”</p>
-</blockquote>
-<p>一定要通过-m参数来加上提交的描述信息，否则是不合法的。</p>
-</li>
-</ul>
-<h1 id="Git进阶">Git进阶</h1><h3 id="查看修改内容">查看修改内容</h3><ul>
-<li><p>在项目的根目录下输入如下命令</p>
-<blockquote>
-<p>git status</p>
-</blockquote>
-</li>
-<li><p>查看更改的内容</p>
-<blockquote>
-<p>git diff</p>
-</blockquote>
-</li>
-<li><p>查看单个文件的更改</p>
-<blockquote>
-<p>git diff src/com/example/providertest/MainActivity.java</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="撤销未提交的修改">撤销未提交的修改</h3><ul>
-<li><p>未执行 add 命令的文件的撤销，使用 checkout 命令</p>
-<blockquote>
-<p>git checkout src/com/example/providertest/MainActivity.java</p>
-</blockquote>
-</li>
-<li><p>执行add命令的文件的撤销<br>先取消添加，然后才能撤销修改，取消添加使用 reset 命令</p>
-<blockquote>
-<p>git reset HEAD src/com/example/providertest/MainActivity.java</p>
-</blockquote>
-<p>此时就可以使用 checkout 命令将修改的内容撤销了。</p>
-</li>
-</ul>
-<h3 id="查看提交记录">查看提交记录</h3><ul>
-<li><p>使用 log 命令查看历史提交信息</p>
-<blockquote>
-<p>git log</p>
-</blockquote>
-</li>
-<li><p>如果只想查看其中一条记录，可以在命令中指定该记录的id，并加上 -1 参数，表示我们只想看到一行记录，如果想看到具体修改了什么内容，再加上 -p 参数</p>
-<blockquote>
-<p>git log 2b51963c26576921c30cb7fe2e2d8c57fc5d1625 -1 -p</p>
-</blockquote>
-</li>
-</ul>
-<h1 id="Git高级">Git高级</h1><h3 id="分支的用法">分支的用法</h3><ul>
-<li><p>创建分支<br>创建一个名为version1.0的分支</p>
-<blockquote>
-<p>git branch version1.0</p>
-</blockquote>
-</li>
-<li><p>查看当前版本库有哪些分支</p>
-<blockquote>
-<p>git branch -a</p>
-</blockquote>
-</li>
-<li><p>切换分支，从master分支切换到version1.0分支上</p>
-<blockquote>
-<p>git checkout version1.0</p>
-</blockquote>
-</li>
-<li><p>合并分支，将version1.0分支上修改并提交的内容合并到master分支上</p>
-<blockquote>
-<p>git checkout master<br>git merge version1.0</p>
-</blockquote>
-</li>
-<li><p>删除分支，将version1.0分支删除</p>
-<blockquote>
-<p>git branch -D version1.0</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="与远程版本库协作">与远程版本库协作</h3><ul>
-<li><p>将远程版本库克隆到本地</p>
-<blockquote>
-<p>git clone <a href="https://github.com/xuesongzh/MyMall.git" target="_blank" rel="external">https://github.com/xuesongzh/MyMall.git</a></p>
-</blockquote>
-</li>
-<li><p>将本地修改的内容同步到远程版本库</p>
-<blockquote>
-<p>git push origin master</p>
-</blockquote>
-<p>其中，origin 指定的是远程版本库的Git地址，master 指定的是同步到哪一个分支上</p>
-</li>
-<li><p>将远程版本库上的修改同步到本地，使用<strong>fetch</strong>或<strong>pull</strong>两种命令<br><strong>1.fetch命令</strong></p>
-<blockquote>
-<p>git fetch origin master</p>
-</blockquote>
-<p>将远程版本库上的代码同步到本地，但不会合并到任何分支上，而是存放到一个origin/masster分支上，可以通过<strong>diff</strong>命令来查看远程版本库上修改的内容</p>
-<blockquote>
-<p>git diff origin/master</p>
-</blockquote>
-<p>再调用merge命令将origin/masster分支上的修改合并到主分支上</p>
-<blockquote>
-<p>git merge origin/masster</p>
-</blockquote>
-<p><strong>2.pull命令</strong><br>可以从远程版本库上获取最新的代码并合并到本地</p>
-<blockquote>
-<p>git pull origin master</p>
-</blockquote>
-<p>Git的常见用法就介绍到这，更详细的讲解请参看<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">Git教程 - 廖雪峰的官方网站</a></p>
-</li>
-</ul>
-
         
         
         <p class="article-more-link">
+          
+            <a href="/2015/12/23/Git简明教程/#more">阅读更多</a>
           
        </p>
     </div>
