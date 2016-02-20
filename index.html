@@ -77,6 +77,82 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/02/20/商城项目开发（二）/" title="商城项目开发（二）" itemprop="url">商城项目开发（二）</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-20T07:37:13.000Z" itemprop="datePublished"> 发表于 2016-02-20</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="第一个Tab—首页的实现">第一个Tab—首页的实现</h1><h2 id="自动轮播图片">自动轮播图片</h2><p>使用<a href="https://github.com/daimajia/AndroidImageSlider">AndroidImageSlider</a>开源项目</p>
+<h3 id="基本使用">基本使用</h3><ul>
+<li>fragment_home.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">LinearLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">              <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">              <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">              <span class="attribute">android:orientation</span>=<span class="value">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">com.daimajia.slider.library.SliderLayout</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/slider"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"200dp"</span></span><br><span class="line">        /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>HomeFragment.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HomeFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> SliderLayout mSliderLayout;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Nullable</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        View view = inflater.inflate(R.layout.fragment_home, container, <span class="keyword">false</span>);</span><br><span class="line">        mSliderLayout = (SliderLayout) view.findViewById(R.id.slider);</span><br><span class="line"></span><br><span class="line">        initSlider();</span><br><span class="line">        <span class="keyword">return</span> view;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initSlider</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        TextSliderView textSliderView1 = <span class="keyword">new</span> TextSliderView(<span class="keyword">this</span>.getActivity());</span><br><span class="line">        textSliderView1.image(<span class="string">"http://m.360buyimg.com/mobilecms/s300x98_jfs/t2416/102/20949846/13425/a3027ebc/55e6d1b9Ne6fd6d8f.jpg"</span>);</span><br><span class="line">        textSliderView1.description(<span class="string">"新品推荐"</span>);</span><br><span class="line"></span><br><span class="line">        TextSliderView textSliderView2 = <span class="keyword">new</span> TextSliderView(<span class="keyword">this</span>.getActivity());</span><br><span class="line">        textSliderView2.image(<span class="string">"http://m.360buyimg.com/mobilecms/s300x98_jfs/t1507/64/486775407/55927/d72d78cb/558d2fbaNb3c2f349.jpg"</span>);</span><br><span class="line">        textSliderView2.description(<span class="string">"时尚男装"</span>);</span><br><span class="line"></span><br><span class="line">        TextSliderView textSliderView3 = <span class="keyword">new</span> TextSliderView(<span class="keyword">this</span>.getActivity());</span><br><span class="line">        textSliderView3.image(<span class="string">"http://m.360buyimg.com/mobilecms/s300x98_jfs/t1363/77/1381395719/60705/ce91ad5c/55dd271aN49efd216.jpg"</span>);</span><br><span class="line">        textSliderView3.description(<span class="string">"家电秒杀"</span>);</span><br><span class="line"></span><br><span class="line">        mSliderLayout.addSlider(textSliderView1);</span><br><span class="line">        mSliderLayout.addSlider(textSliderView2);</span><br><span class="line">        mSliderLayout.addSlider(textSliderView3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>效果图</li>
+</ul>
+<p><img src="http://7xpndb.com1.z0.glb.clouddn.com/%E8%BD%AE%E6%92%AD1.gif" alt="轮播图1"></p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2016/02/20/商城项目开发（二）/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/项目/">项目</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android/">Android</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/02/20/商城项目开发（二）/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/02/20/商城项目开发（二）/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/01/21/编程入门指南/" title="编程入门指南" itemprop="url">编程入门指南</a>
   </h1>
   <p class="article-author">By
@@ -435,7 +511,7 @@
 		  
 		
 		  
-			<li><a href="/categories/项目/" title="项目">项目<sup>1</sup></a></li>
+			<li><a href="/categories/项目/" title="项目">项目<sup>2</sup></a></li>
 		  
 		
 		</ul>
@@ -448,7 +524,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Android/" title="Android">Android<sup>2</sup></a></li>
+				<li><a href="/tags/Android/" title="Android">Android<sup>3</sup></a></li>
 			
 		
 			
