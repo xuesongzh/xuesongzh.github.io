@@ -13,36 +13,21 @@
     
     <meta name="description" content="从今天起开始开发一个商城项目，记录下开发过程。代码见MyMall。
 
-1.fragmentTabHost实现底部菜单创建修改过的FragmentTabHost，保存fragment实例不销毁，放到widget包中FragmentTabHost：
-
-
-布局文件activity_main.xml
-
-1234567891011121314151617181920212223242526272829303">
+1.fragmentTabHost实现底部菜单创建修改过的FragmentTabHost，保存fragment实例不销毁，放到widget包中FragmentTabHost：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="商城项目开发（一）">
 <meta property="og:url" content="http://xuesongzh.github.io/2016/01/06/商城项目开发（一）/index.html">
 <meta property="og:site_name" content="zxsong's blog">
 <meta property="og:description" content="从今天起开始开发一个商城项目，记录下开发过程。代码见MyMall。
 
-1.fragmentTabHost实现底部菜单创建修改过的FragmentTabHost，保存fragment实例不销毁，放到widget包中FragmentTabHost：
-
-
-布局文件activity_main.xml
-
-1234567891011121314151617181920212223242526272829303">
+1.fragmentTabHost实现底部菜单创建修改过的FragmentTabHost，保存fragment实例不销毁，放到widget包中FragmentTabHost：">
 <meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/FragmentTabHost.png">
-<meta property="og:updated_time" content="2016-01-06T15:15:51.062Z">
+<meta property="og:updated_time" content="2016-02-22T07:14:21.808Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="商城项目开发（一）">
 <meta name="twitter:description" content="从今天起开始开发一个商城项目，记录下开发过程。代码见MyMall。
 
-1.fragmentTabHost实现底部菜单创建修改过的FragmentTabHost，保存fragment实例不销毁，放到widget包中FragmentTabHost：
-
-
-布局文件activity_main.xml
-
-1234567891011121314151617181920212223242526272829303">
+1.fragmentTabHost实现底部菜单创建修改过的FragmentTabHost，保存fragment实例不销毁，放到widget包中FragmentTabHost：">
 
     
     <link rel="alternative" href="/atom.xml" title="zxsong&#39;s blog" type="application/atom+xml">
@@ -122,11 +107,12 @@
 <hr>
 <h1 id="1-fragmentTabHost实现底部菜单">1.fragmentTabHost实现底部菜单</h1><h2 id="创建修改过的FragmentTabHost，保存fragment实例不销毁，放到widget包中">创建修改过的FragmentTabHost，保存fragment实例不销毁，放到widget包中</h2><p>FragmentTabHost：</p>
 <p><img src="http://7xpndb.com1.z0.glb.clouddn.com/FragmentTabHost.png" alt="FragmentTabHost"></p>
+<a id="more"></a>
 <ul>
 <li>布局文件activity_main.xml</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">LinearLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">              <span class="attribute">xmlns:tools</span>=<span class="value">"http://schemas.android.com/tools"</span></span><br><span class="line">              <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">              <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">              <span class="attribute">android:orientation</span>=<span class="value">"vertical"</span></span><br><span class="line">              <span class="attribute">tools:context</span>=<span class="value">".MainActivity"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">FrameLayout</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/realtabcontent"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"fill_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"0dp"</span></span><br><span class="line">        <span class="attribute">android:layout_weight</span>=<span class="value">"1"</span></span><br><span class="line">        <span class="attribute">android:background</span>=<span class="value">"@color/bg_color"</span></span><br><span class="line">        /&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">com.zxsong.mymall.widget.FragmentTabHost</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@android:id/tabhost"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"fill_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:background</span>=<span class="value">"@color/white"</span></span><br><span class="line">        &gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">FrameLayout</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@android:id/tabcontent"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"0dp"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"0dp"</span></span><br><span class="line">            <span class="attribute">android:layout_weight</span>=<span class="value">"0"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="title">com.zxsong.mymall.widget.FragmentTabHost</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<a id="more"></a>
+<!--more-->
 <ul>
 <li>底部的tab布局tab_indicator.xml</li>
 </ul>
