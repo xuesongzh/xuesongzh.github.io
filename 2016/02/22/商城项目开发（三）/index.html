@@ -22,7 +22,8 @@
 <meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/Http%20POST1.png">
 <meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/Http%20POST2.png">
 <meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/OkHttp%E5%B0%81%E8%A3%85.png">
-<meta property="og:updated_time" content="2016-02-22T07:11:24.308Z">
+<meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/%E9%A6%96%E9%A1%B5net.gif">
+<meta property="og:updated_time" content="2016-02-22T11:30:57.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="商城项目开发（三）">
 <meta name="twitter:description" content="首页重构Android网络请求Android 中网络请求的进化">
@@ -152,6 +153,7 @@
 <li>HomeFragemt.java<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initRecyclerView</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        httpHelper.get(Contants.API.CAMPAIGN_HOME, <span class="keyword">new</span> BaseCallback&lt;List&lt;HomeCampaign&gt;&gt;() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Response response, <span class="keyword">int</span> code, Exception e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(Response response, List&lt;HomeCampaign&gt; homeCampaigns)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">                initRecyclerViewData(homeCampaigns);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Response response)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Request request, Exception e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBeforeRequest</span><span class="params">(Request request)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initRecyclerViewData</span><span class="params">(List&lt;HomeCampaign&gt; homeCampaigns)</span> </span>&#123;</span><br><span class="line">        mAdapter = <span class="keyword">new</span> HomeCampaignAdapter(homeCampaigns,getActivity());</span><br><span class="line"></span><br><span class="line">        mAdapter.setOnCampaignClickListener(<span class="keyword">new</span> HomeCampaignAdapter.OnCampaignClickListener() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view, Campaign campaign)</span> </span>&#123;</span><br><span class="line">                Toast.makeText(getContext(), <span class="string">"title="</span> + campaign.getTitle(), Toast.LENGTH_LONG).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        mRecyclerView.setAdapter(mAdapter);</span><br><span class="line"></span><br><span class="line">        mRecyclerView.addItemDecoration(<span class="keyword">new</span> DividerItemDecortion());</span><br><span class="line"></span><br><span class="line">        mRecyclerView.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(getActivity()));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<p><img src="http://7xpndb.com1.z0.glb.clouddn.com/%E9%A6%96%E9%A1%B5net.gif" alt="首页"></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -187,6 +189,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2016/02/23/商城项目开发（四）/" title="商城项目开发（四）">
+  <strong>上一篇：</strong><br/>
+  <span>
+  商城项目开发（四）</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2016/02/20/商城项目开发（二）/"  title="商城项目开发（二）">
@@ -232,7 +242,7 @@
 		  
 		
 		  
-			<li><a href="/categories/项目/" title="项目">项目<sup>3</sup></a></li>
+			<li><a href="/categories/项目/" title="项目">项目<sup>4</sup></a></li>
 		  
 		
 		</ul>
@@ -245,7 +255,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Android/" title="Android">Android<sup>4</sup></a></li>
+				<li><a href="/tags/Android/" title="Android">Android<sup>5</sup></a></li>
 			
 		
 			
