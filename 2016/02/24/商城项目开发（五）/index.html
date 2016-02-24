@@ -1,0 +1,540 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>商城项目开发（五） | zxsong&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zxsong">
+    
+
+    
+    <meta name="description" content="分类Adapter封装1.数据使用泛型2.数据绑定通过实现抽象方法来实现3.ViewHolder中的View成员变量通过view数组来实现4.基类里面提供常用的方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="商城项目开发（五）">
+<meta property="og:url" content="http://xuesongzh.github.io/2016/02/24/商城项目开发（五）/index.html">
+<meta property="og:site_name" content="zxsong's blog">
+<meta property="og:description" content="分类Adapter封装1.数据使用泛型2.数据绑定通过实现抽象方法来实现3.ViewHolder中的View成员变量通过view数组来实现4.基类里面提供常用的方法">
+<meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/category.gif">
+<meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/category2.gif">
+<meta property="og:updated_time" content="2016-02-24T09:39:35.491Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="商城项目开发（五）">
+<meta name="twitter:description" content="分类Adapter封装1.数据使用泛型2.数据绑定通过实现抽象方法来实现3.ViewHolder中的View成员变量通过view数组来实现4.基类里面提供常用的方法">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zxsong&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="zxsong&#39;s blog">zxsong&#39;s blog</a></h1>
+				<h2 class="blog-motto">以梦为马，诗酒趁年华</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:xuesongzh.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/02/24/商城项目开发（五）/" title="商城项目开发（五）" itemprop="url">商城项目开发（五）</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-24T09:38:35.000Z" itemprop="datePublished"> 发表于 2016-02-24</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分类"><span class="toc-number">1.</span> <span class="toc-text">分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Adapter封装"><span class="toc-number">1.1.</span> <span class="toc-text">Adapter封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一级商品分类"><span class="toc-number">1.2.</span> <span class="toc-text">一级商品分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二级商品分类"><span class="toc-number">1.3.</span> <span class="toc-text">二级商品分类</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="分类">分类</h1><h2 id="Adapter封装">Adapter封装</h2><p>1.数据使用泛型<br>2.数据绑定通过实现抽象方法来实现<br>3.ViewHolder中的View成员变量通过view数组来实现<br>4.基类里面提供常用的方法</p>
+<a id="more"></a>
+<ul>
+<li>BaseAdapter.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseAdapter</span>&lt;<span class="title">T</span>, <span class="title">H</span> <span class="keyword">extends</span> <span class="title">BaseViewHolder</span>&gt; <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">BaseViewHolder</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> Context context;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">int</span> layoutResId;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> List&lt;T&gt; mDatas;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> LayoutInflater mInflater;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> OnItemClickListener listener;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOnItemClickListener</span><span class="params">(OnItemClickListener listener)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.listener = listener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BaseAdapter</span><span class="params">(Context context, <span class="keyword">int</span> layoutResId, List&lt;T&gt; datas)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.context = context;</span><br><span class="line">        <span class="keyword">this</span>.layoutResId = layoutResId;</span><br><span class="line">        <span class="keyword">this</span>.mDatas = datas;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BaseViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        mInflater = LayoutInflater.from(parent.getContext());</span><br><span class="line">        View view = mInflater.inflate(layoutResId, parent, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BaseViewHolder(view,listener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(BaseViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        T t = mDatas.get(position);</span><br><span class="line">        bindData(holder,t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mDatas.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getDatas</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> mDatas;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addData</span><span class="params">(List&lt;T&gt; datas)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        addData(<span class="number">0</span>, datas);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addData</span><span class="params">(<span class="keyword">int</span> position, List&lt;T&gt; datas)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (datas != <span class="keyword">null</span> &amp;&amp; datas.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            mDatas.addAll(datas);</span><br><span class="line">            notifyItemRangeChanged(position, datas.size());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">bindData</span><span class="params">(BaseViewHolder holder, T t)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OnItemClickListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(View view, <span class="keyword">int</span> position)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BaseViewHolder.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseViewHolder</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> SparseArray&lt;View&gt; views;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> BaseAdapter.OnItemClickListener listener;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BaseViewHolder</span><span class="params">(View itemView,BaseAdapter.OnItemClickListener listener)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(itemView);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.views = <span class="keyword">new</span> SparseArray&lt;View&gt;();</span><br><span class="line">        <span class="keyword">this</span>.listener = listener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TextView <span class="title">getTextView</span><span class="params">(<span class="keyword">int</span> viewId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> retrieveView(viewId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Button <span class="title">getButton</span><span class="params">(<span class="keyword">int</span> viewId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> retrieveView(viewId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ImageView <span class="title">getImageView</span><span class="params">(<span class="keyword">int</span> viewId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> retrieveView(viewId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">getView</span><span class="params">(<span class="keyword">int</span> viewId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> retrieveView(viewId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> &lt;T extends View&gt; <span class="function">T <span class="title">retrieveView</span><span class="params">(<span class="keyword">int</span> viewId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        View view = views.get(viewId);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (view == <span class="keyword">null</span>) &#123;</span><br><span class="line">            view = itemView.findViewById(viewId);</span><br><span class="line">            views.put(viewId, view);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (T) view;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (listener != <span class="keyword">null</span>) &#123;</span><br><span class="line">            listener.onItemClick(v, getLayoutPosition());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>HWAdapter.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HWAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span>&lt;<span class="title">Wares</span>, <span class="title">BaseViewHolder</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HWAdapter</span><span class="params">(Context context, List&lt;Wares&gt; datas)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, R.layout.template_hot_wares, datas);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">bindData</span><span class="params">(BaseViewHolder holder, Wares wares)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        SimpleDraweeView simpleDraweeView = (SimpleDraweeView) holder.getView(R.id.drawee_view);</span><br><span class="line">        simpleDraweeView.setImageURI(Uri.parse(wares.getImgUrl()));</span><br><span class="line"></span><br><span class="line">        holder.getTextView(R.id.text_title).setText(wares.getName());</span><br><span class="line">        holder.getTextView(R.id.text_price).setText(<span class="string">"￥"</span> + wares.getPrice());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="一级商品分类">一级商品分类</h2><ul>
+<li>CategoryAdapter.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CategoryAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span>&lt;<span class="title">Category</span>,<span class="title">BaseViewHolder</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CategoryAdapter</span><span class="params">(Context context , List&lt;Category&gt; datas)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, R.layout.template_single_text, datas);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">bindData</span><span class="params">(BaseViewHolder holder, Category category)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        holder.getTextView(R.id.textView).setText(category.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CategoryFragment.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CategoryFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.recyclerview_category)</span><br><span class="line">    <span class="keyword">private</span> RecyclerView mRecyclerView;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.recyclerview_wares)</span><br><span class="line">    <span class="keyword">private</span> RecyclerView mRecyclerviewWares;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.refresh_layout)</span><br><span class="line">    <span class="keyword">private</span> MaterialRefreshLayout mRefreshLaout;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.slider)</span><br><span class="line">    <span class="keyword">private</span> SliderLayout mSliderLayout;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> OkHttpHelper httpHelper = OkHttpHelper.getInstance();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> CategoryAdapter mAdapter;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        View view = inflater.inflate(R.layout.fragment_category, container, <span class="keyword">false</span>);</span><br><span class="line">        ViewUtils.inject(<span class="keyword">this</span>, view);</span><br><span class="line"></span><br><span class="line">        requestCategoryData();</span><br><span class="line">        requestBannerData();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> view;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">requestCategoryData</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        httpHelper.get(Contants.API.CATEGORY_LIST, <span class="keyword">new</span> SpotsCallBack&lt;List&lt;Category&gt;&gt;(getContext()) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(Response response, List&lt;Category&gt; categories)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">                showCategoryData(categories);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Response response, <span class="keyword">int</span> code, Exception e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showCategoryData</span><span class="params">(List&lt;Category&gt; datas)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        mAdapter = <span class="keyword">new</span> CategoryAdapter(getContext(), datas);</span><br><span class="line"></span><br><span class="line">        mRecyclerView.setAdapter(mAdapter);</span><br><span class="line">        mRecyclerView.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(getContext()));</span><br><span class="line">        mRecyclerView.setItemAnimator(<span class="keyword">new</span> DefaultItemAnimator());</span><br><span class="line">        mRecyclerView.addItemDecoration(<span class="keyword">new</span> DividerItemDecoration(getActivity(), DividerItemDecoration</span><br><span class="line">                .VERTICAL_LIST));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">requestBannerData</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        httpHelper.get(Contants.API.BANNER_HOME + <span class="string">"?type=1"</span>, <span class="keyword">new</span> SpotsCallBack&lt;List&lt;Banner&gt;&gt;(getContext()) &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(Response response, List&lt;Banner&gt; banners)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">                showBannerData(banners);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Response response, <span class="keyword">int</span> code, Exception e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showBannerData</span><span class="params">(List&lt;Banner&gt; banners)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (banners != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (Banner banner : banners) &#123;</span><br><span class="line">                TextSliderView textSliderView = <span class="keyword">new</span> TextSliderView(<span class="keyword">this</span>.getActivity());</span><br><span class="line">                textSliderView.image(banner.getImgUrl());</span><br><span class="line">                textSliderView.description(banner.getName());</span><br><span class="line">                textSliderView.setScaleType(BaseSliderView.ScaleType.Fit);</span><br><span class="line">                mSliderLayout.addSlider(textSliderView);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//转场动画</span></span><br><span class="line">        mSliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);</span><br><span class="line">        <span class="comment">// mSliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//描述信息的动画</span></span><br><span class="line">        mSliderLayout.setCustomAnimation(<span class="keyword">new</span> DescriptionAnimation());</span><br><span class="line">        mSliderLayout.setDuration(<span class="number">3000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果图：</p>
+<p><img src="http://7xpndb.com1.z0.glb.clouddn.com/category.gif" alt="分类"></p>
+<h2 id="二级商品分类">二级商品分类</h2><ul>
+<li>CategoryFragment.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">requestWaresData</span><span class="params">(<span class="keyword">long</span> categoryId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String url = Contants.API.WARES_LIST + <span class="string">"?categoryId="</span> + categoryId + <span class="string">"&amp;curPage="</span> + currPage + <span class="string">"&amp;pageSize="</span> +</span><br><span class="line">                pageSize;</span><br><span class="line"></span><br><span class="line">        httpHelper.get(url, <span class="keyword">new</span> BaseCallback&lt;Page&lt;Wares&gt;&gt;() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBeforeRequest</span><span class="params">(Request request)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Request request, Exception e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Response response)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(Response response, Page&lt;Wares&gt; waresPage)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">                currPage = waresPage.getCurrentPage();</span><br><span class="line">                pageSize = waresPage.getPageSize();</span><br><span class="line">                totalPage = waresPage.getTotalPage();</span><br><span class="line"></span><br><span class="line">                showWaresData(waresPage.getList());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Response response, <span class="keyword">int</span> code, Exception e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showWaresData</span><span class="params">(List&lt;Wares&gt; wares)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (state) &#123;</span><br><span class="line">            <span class="keyword">case</span> STATE_NORMAL:</span><br><span class="line">                <span class="comment">//连续点击分类列表，右边商品分割线会越来越大，需要判断</span></span><br><span class="line">                <span class="keyword">if</span> (mWaresAdapter == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    mWaresAdapter = <span class="keyword">new</span> CategoryWaresAdapter(getActivity(), wares);</span><br><span class="line">                    mRecyclerViewWares.setAdapter(mWaresAdapter);</span><br><span class="line">                    mRecyclerViewWares.setLayoutManager(<span class="keyword">new</span> GridLayoutManager(getActivity(), <span class="number">2</span>));</span><br><span class="line">                    mRecyclerViewWares.setItemAnimator(<span class="keyword">new</span> DefaultItemAnimator());</span><br><span class="line">                    mRecyclerViewWares.addItemDecoration(<span class="keyword">new</span> DividerGridItemDecoration(getContext()));</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    mWaresAdapter.clearData();</span><br><span class="line">                    mWaresAdapter.addData(wares);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> STATE_REFREH:</span><br><span class="line">                mWaresAdapter.addData(wares);</span><br><span class="line">                mRecyclerViewWares.scrollToPosition(<span class="number">0</span>);</span><br><span class="line">                mRefreshLayout.finishRefresh();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> STATE_MORE:</span><br><span class="line">                mWaresAdapter.addData(mWaresAdapter.getDatas().size(), wares);</span><br><span class="line">                mRecyclerViewWares.scrollToPosition(mWaresAdapter.getDatas().size() - wares.size());</span><br><span class="line">                mRefreshLayout.finishRefreshLoadMore();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>首先显示第一个分类的商品数据，并添加点击事件，显示不同分类的商品数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">requestCategoryData</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">       httpHelper.get(Contants.API.CATEGORY_LIST, <span class="keyword">new</span> SpotsCallBack&lt;List&lt;Category&gt;&gt;(getContext()) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">           <span class="annotation">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(Response response, List&lt;Category&gt; categories)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">               showCategoryData(categories);</span><br><span class="line"></span><br><span class="line">               <span class="keyword">if</span> (categories != <span class="keyword">null</span> &amp;&amp; categories.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                   <span class="comment">//显示第一个分类的商品数据</span></span><br><span class="line">                   requestWaresData(categories.get(<span class="number">0</span>).getId());</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           <span class="annotation">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Response response, <span class="keyword">int</span> code, Exception e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showCategoryData</span><span class="params">(List&lt;Category&gt; categories)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">       mAdapter = <span class="keyword">new</span> CategoryAdapter(getContext(), categories);</span><br><span class="line"></span><br><span class="line">       mAdapter.setOnItemClickListener(<span class="keyword">new</span> BaseAdapter.OnItemClickListener() &#123;</span><br><span class="line"></span><br><span class="line">           <span class="annotation">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(View view, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">               categoryId = mAdapter.getItem(position).getId();</span><br><span class="line">               <span class="comment">//刷新后currPage需要重置</span></span><br><span class="line">               currPage = <span class="number">1</span>;</span><br><span class="line">               state = STATE_NORMAL;</span><br><span class="line"></span><br><span class="line">               requestWaresData(categoryId);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">       </span><br><span class="line">       mRecyclerView.setAdapter(mAdapter);</span><br><span class="line">       mRecyclerView.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(getContext()));</span><br><span class="line">       mRecyclerView.setItemAnimator(<span class="keyword">new</span> DefaultItemAnimator());</span><br><span class="line">       mRecyclerView.addItemDecoration(<span class="keyword">new</span> DividerItemDecoration(getActivity(), DividerItemDecoration</span><br><span class="line">               .VERTICAL_LIST));</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>下拉刷新和加载更多</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initRefreshLayout</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        mRefreshLayout.setLoadMore(<span class="keyword">true</span>);</span><br><span class="line">        mRefreshLayout.setMaterialRefreshListener(<span class="keyword">new</span> MaterialRefreshListener() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRefresh</span><span class="params">(MaterialRefreshLayout materialRefreshLayout)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">                refreshWaresData();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRefreshLoadMore</span><span class="params">(MaterialRefreshLayout materialRefreshLayout)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (currPage &lt; totalPage) &#123;</span><br><span class="line">                    loadMoreData();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    Toast.makeText(getActivity(), <span class="string">"已经没有数据了"</span>, Toast.LENGTH_LONG).show();</span><br><span class="line">                    mRefreshLayout.finishRefreshLoadMore();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadMoreData</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        currPage = ++currPage;</span><br><span class="line">        state = STATE_MORE;</span><br><span class="line">        requestWaresData(categoryId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">refreshWaresData</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        currPage = <span class="number">1</span>;</span><br><span class="line">        state = STATE_REFREH;</span><br><span class="line">        requestWaresData(categoryId);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>效果图：</p>
+<p><img src="http://7xpndb.com1.z0.glb.clouddn.com/category2.gif" alt="二级分类"></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/项目/">项目</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android/">Android</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://xuesongzh.github.io/2016/02/24/商城项目开发（五）/" data-title="商城项目开发（五） | zxsong&#39;s blog" data-tsina="2420990051" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/02/23/商城项目开发（四）/"  title="商城项目开发（四）">
+ <strong>下一篇：</strong><br/> 
+ <span>商城项目开发（四）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/02/24/商城项目开发（五）/" data-title="商城项目开发（五）" data-url="http://xuesongzh.github.io/2016/02/24/商城项目开发（五）/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分类"><span class="toc-number">1.</span> <span class="toc-text">分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Adapter封装"><span class="toc-number">1.1.</span> <span class="toc-text">Adapter封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一级商品分类"><span class="toc-number">1.2.</span> <span class="toc-text">一级商品分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二级商品分类"><span class="toc-number">1.3.</span> <span class="toc-text">二级商品分类</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/教程/" title="教程">教程<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资源/" title="资源">资源<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/项目/" title="项目">项目<sup>5</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Android/" title="Android">Android<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/编程/" title="编程">编程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.trinea.cn/" target="_blank" title="Trinea">Trinea</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://a.codekk.com/" target="_blank" title="codeKK">codeKK</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://hukai.me/" target="_blank" title="胡凯">胡凯</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.csdn.net/guolin_blog" target="_blank" title="郭霖">郭霖</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m zxsong, a student of SHU. <br/>
+			Think different, Make great products.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/xuesongzh" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/xuesongzh" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="http://www.zhihu.com/people/zhang-xue-song-7" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:zxsong13@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="zxsong">zxsong</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"xuesongzh"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f903dd6a43e7b6e747bc07b7b259abd4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
