@@ -1,0 +1,587 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>商城项目开发（六） | zxsong&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zxsong">
+    
+
+    
+    <meta name="description" content="购物车自定义数字加减控件—组合控件1.输入框只能是数字，且不能通过键盘输入2.通过加减按钮操作数字3.监听加减按钮4.数字有最小值和最大值的限制5.自定义属性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="商城项目开发（六）">
+<meta property="og:url" content="http://xuesongzh.github.io/2016/03/02/商城项目开发（六）/index.html">
+<meta property="og:site_name" content="zxsong's blog">
+<meta property="og:description" content="购物车自定义数字加减控件—组合控件1.输入框只能是数字，且不能通过键盘输入2.通过加减按钮操作数字3.监听加减按钮4.数字有最小值和最大值的限制5.自定义属性">
+<meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/customView.gif">
+<meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/ShoppingCart1.PNG">
+<meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/cart.gif">
+<meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/cart2.gif">
+<meta property="og:updated_time" content="2016-03-02T11:09:40.731Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="商城项目开发（六）">
+<meta name="twitter:description" content="购物车自定义数字加减控件—组合控件1.输入框只能是数字，且不能通过键盘输入2.通过加减按钮操作数字3.监听加减按钮4.数字有最小值和最大值的限制5.自定义属性">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zxsong&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="zxsong&#39;s blog">zxsong&#39;s blog</a></h1>
+				<h2 class="blog-motto">以梦为马，诗酒趁年华</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:xuesongzh.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/02/商城项目开发（六）/" title="商城项目开发（六）" itemprop="url">商城项目开发（六）</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-02T11:07:52.000Z" itemprop="datePublished"> 发表于 2016-03-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#购物车"><span class="toc-number">1.</span> <span class="toc-text">购物车</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义数字加减控件—组合控件"><span class="toc-number">1.1.</span> <span class="toc-text">自定义数字加减控件—组合控件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#购物车数据存储器"><span class="toc-number">1.2.</span> <span class="toc-text">购物车数据存储器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#显示购物车商品"><span class="toc-number">1.3.</span> <span class="toc-text">显示购物车商品</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#购物车商品选择和总价统计"><span class="toc-number">1.4.</span> <span class="toc-text">购物车商品选择和总价统计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#总价统计"><span class="toc-number">1.4.1.</span> <span class="toc-text">总价统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#商品选择"><span class="toc-number">1.4.2.</span> <span class="toc-text">商品选择</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#增减商品数量"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">增减商品数量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#选择或不选单个商品"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">选择或不选单个商品</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全选或全不选"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">全选或全不选</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#购物车ToolBar中编辑按钮功能"><span class="toc-number">1.5.</span> <span class="toc-text">购物车ToolBar中编辑按钮功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑按钮的点击效果"><span class="toc-number">1.5.1.</span> <span class="toc-text">编辑按钮的点击效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除按钮功能的实现"><span class="toc-number">1.5.2.</span> <span class="toc-text">删除按钮功能的实现</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="购物车">购物车</h1><h2 id="自定义数字加减控件—组合控件">自定义数字加减控件—组合控件</h2><p>1.输入框只能是数字，且不能通过键盘输入<br>2.通过加减按钮操作数字<br>3.监听加减按钮<br>4.数字有最小值和最大值的限制<br>5.自定义属性</p>
+<a id="more"></a>
+<ul>
+<li>自定义数字加减控件 wieght_number_add_sub.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">LinearLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">              <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">              <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">              <span class="attribute">android:background</span>=<span class="value">"@drawable/selector_number_add_sub"</span></span><br><span class="line">              <span class="attribute">android:orientation</span>=<span class="value">"horizontal"</span></span><br><span class="line">              <span class="attribute">android:padding</span>=<span class="value">"5dp"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">Button</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/btn_sub"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"25dp"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"25dp"</span></span><br><span class="line">        <span class="attribute">android:background</span>=<span class="value">"@drawable/bg_btn_style_white"</span></span><br><span class="line">        <span class="attribute">android:padding</span>=<span class="value">"5dp"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">"-"</span></span><br><span class="line">        <span class="attribute">android:textColor</span>=<span class="value">"@color/black"</span></span><br><span class="line">        <span class="attribute">android:textSize</span>=<span class="value">"15sp"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/txt_num"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"40dp"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"30dp"</span></span><br><span class="line">        <span class="attribute">android:gravity</span>=<span class="value">"center"</span></span><br><span class="line">        <span class="attribute">android:textColor</span>=<span class="value">"@color/black"</span></span><br><span class="line">        <span class="attribute">android:textSize</span>=<span class="value">"15sp"</span></span><br><span class="line">        /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">Button</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/btn_add"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"25dp"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"25dp"</span></span><br><span class="line">        <span class="attribute">android:background</span>=<span class="value">"@drawable/bg_btn_style_white"</span></span><br><span class="line">        <span class="attribute">android:padding</span>=<span class="value">"5dp"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">"+"</span></span><br><span class="line">        <span class="attribute">android:textColor</span>=<span class="value">"@color/black"</span></span><br><span class="line">        <span class="attribute">android:textSize</span>=<span class="value">"15sp"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>自定义属性值</p>
+<ul>
+<li>attrs.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">resources</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="title">declare-styleable</span> <span class="attribute">name</span>=<span class="value">"NumberAddSubView"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">attr</span> <span class="attribute">name</span>=<span class="value">"value"</span> <span class="attribute">format</span>=<span class="value">"integer|reference"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">attr</span> <span class="attribute">name</span>=<span class="value">"minValue"</span> <span class="attribute">format</span>=<span class="value">"integer|reference"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">attr</span> <span class="attribute">name</span>=<span class="value">"maxValue"</span> <span class="attribute">format</span>=<span class="value">"integer|reference"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">attr</span> <span class="attribute">name</span>=<span class="value">"editBackground"</span> <span class="attribute">format</span>=<span class="value">"reference"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">attr</span> <span class="attribute">name</span>=<span class="value">"buttonAddBackgroud"</span> <span class="attribute">format</span>=<span class="value">"reference"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">attr</span> <span class="attribute">name</span>=<span class="value">"buttonSubBackgroud"</span> <span class="attribute">format</span>=<span class="value">"reference"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="title">declare-styleable</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>activity_main.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">RelativeLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">                <span class="attribute">xmlns:app</span>=<span class="value">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">                <span class="attribute">xmlns:tools</span>=<span class="value">"http://schemas.android.com/tools"</span></span><br><span class="line">                <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">                <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">                <span class="attribute">android:paddingBottom</span>=<span class="value">"@dimen/activity_vertical_margin"</span></span><br><span class="line">                <span class="attribute">android:paddingLeft</span>=<span class="value">"@dimen/activity_horizontal_margin"</span></span><br><span class="line">                <span class="attribute">android:paddingRight</span>=<span class="value">"@dimen/activity_horizontal_margin"</span></span><br><span class="line">                <span class="attribute">android:paddingTop</span>=<span class="value">"@dimen/activity_vertical_margin"</span></span><br><span class="line">                <span class="attribute">tools:context</span>=<span class="value">".MainActivity"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">com.zxsong.mymall.NumberAddSubView</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">app:manValue</span>=<span class="value">"5"</span></span><br><span class="line">        <span class="attribute">app:minValue</span>=<span class="value">"1"</span></span><br><span class="line">        <span class="attribute">app:value</span>=<span class="value">"1"</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">    <span class="tag">&lt;/<span class="title">com.zxsong.mymall.NumberAddSubView</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>NumberAddSubView.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zxsong.mymall.widget;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.annotation.TargetApi;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.graphics.drawable.Drawable;</span><br><span class="line"><span class="keyword">import</span> android.os.Build;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.widget.TintTypedArray;</span><br><span class="line"><span class="keyword">import</span> android.util.AttributeSet;</span><br><span class="line"><span class="keyword">import</span> android.view.LayoutInflater;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.LinearLayout;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zxsong.mymall.R;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by zxsong on 2016/2/29.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NumberAddSubView</span> <span class="keyword">extends</span> <span class="title">LinearLayout</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> LayoutInflater mInflater;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Button mBtnAdd;</span><br><span class="line">    <span class="keyword">private</span> Button mBtnSub;</span><br><span class="line">    <span class="keyword">private</span> TextView mTextNum;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> value;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> minValue;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxValue;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> OnButtonClickListener listener;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOnButtonClickListener</span><span class="params">(OnButtonClickListener listener)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.listener = listener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NumberAddSubView</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>(context, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NumberAddSubView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NumberAddSubView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line"></span><br><span class="line">        mInflater = LayoutInflater.from(context);</span><br><span class="line"></span><br><span class="line">        initView();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (attrs != <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">            TintTypedArray a = TintTypedArray.obtainStyledAttributes(context, attrs, R.styleable.NumberAddSubView,</span><br><span class="line">                    defStyleAttr, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> val = a.getInt(R.styleable.NumberAddSubView_value, <span class="number">0</span>);</span><br><span class="line">            setValue(val);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> minVal = a.getInt(R.styleable.NumberAddSubView_minValue, <span class="number">0</span>);</span><br><span class="line">            setMinValue(minVal);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> maxVal = a.getInt(R.styleable.NumberAddSubView_maxValue, <span class="number">0</span>);</span><br><span class="line">            setMaxValue(maxVal);</span><br><span class="line"></span><br><span class="line">            Drawable drawableBtnAdd = a.getDrawable(R.styleable.NumberAddSubView_buttonAddBackgroud);</span><br><span class="line">            Drawable drawableBtnSub = a.getDrawable(R.styleable.NumberAddSubView_buttonSubBackgroud);</span><br><span class="line">            Drawable drawableTextView = a.getDrawable(R.styleable.NumberAddSubView_editBackground);</span><br><span class="line"></span><br><span class="line">            setButtonAddBackgroud(drawableBtnAdd);</span><br><span class="line">            setButtonSubBackgroud(drawableBtnSub);</span><br><span class="line">            setTextViewtBackground(drawableTextView);</span><br><span class="line"></span><br><span class="line">            a.recycle();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initView</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        View view = mInflater.inflate(R.layout.wieght_number_add_sub, <span class="keyword">this</span>, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">        mBtnAdd = (Button) view.findViewById(R.id.btn_add);</span><br><span class="line">        mBtnSub = (Button) view.findViewById(R.id.btn_sub);</span><br><span class="line">        mTextNum = (TextView) view.findViewById(R.id.txt_num);</span><br><span class="line"></span><br><span class="line">        mBtnAdd.setOnClickListener(<span class="keyword">this</span>);</span><br><span class="line">        mBtnSub.setOnClickListener(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String val = mTextNum.getText().toString();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (val != <span class="keyword">null</span> &amp;&amp; !<span class="string">""</span>.equals(val))</span><br><span class="line">            <span class="keyword">this</span>.value = Integer.parseInt(val);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        mTextNum.setText(value + <span class="string">""</span>);</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMinValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> minValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMinValue</span><span class="params">(<span class="keyword">int</span> minValue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.minValue = minValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMaxValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> maxValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMaxValue</span><span class="params">(<span class="keyword">int</span> maxValue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.maxValue = maxValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (v.getId() == R.id.btn_add) &#123;</span><br><span class="line"></span><br><span class="line">            numAdd();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (listener != <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">                listener.onButtonAddClick(v,value);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v.getId() == R.id.btn_sub) &#123;</span><br><span class="line"></span><br><span class="line">            numSub();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (listener != <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">                listener.onButtonSubClick(v,value);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">numAdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (value &lt; maxValue)</span><br><span class="line">            value = value + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        mTextNum.setText(value + <span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">numSub</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (value &gt; minValue)</span><br><span class="line">            value = value - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        mTextNum.setText(value + <span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTextViewtBackground</span><span class="params">(Drawable drawable)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        mTextNum.setBackgroundDrawable(drawable);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTextViewBackground</span><span class="params">(<span class="keyword">int</span> drawableId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        setTextViewtBackground(getResources().getDrawable(drawableId));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@TargetApi</span>(Build.VERSION_CODES.JELLY_BEAN)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setButtonAddBackgroud</span><span class="params">(Drawable backgroud)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mBtnAdd.setBackground(backgroud);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@TargetApi</span>(Build.VERSION_CODES.JELLY_BEAN)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setButtonSubBackgroud</span><span class="params">(Drawable backgroud)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mBtnSub.setBackground(backgroud);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//为Button添加点击事件监听，在CartAdapter中用于更新商品的数量变化</span></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OnButtonClickListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onButtonAddClick</span><span class="params">(View view,<span class="keyword">int</span> value)</span></span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onButtonSubClick</span><span class="params">(View view,<span class="keyword">int</span> value)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果图：</p>
+<p><img src="http://7xpndb.com1.z0.glb.clouddn.com/customView.gif" alt=""></p>
+<h2 id="购物车数据存储器">购物车数据存储器</h2><p>1.数据存储在本地—SharedPrefrence<br>2.提供put,update,delete,getAll() 方法<br>3.put 数据时如购物车中存在相同产品则数量加1</p>
+<p>首先创建购物车的实体类</p>
+<ul>
+<li>ShoppingCart.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShoppingCart</span> <span class="keyword">extends</span> <span class="title">Wares</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isChecked = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCount</span><span class="params">(<span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.count = count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isChecked</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> isChecked;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIsChecked</span><span class="params">(<span class="keyword">boolean</span> isChecked)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.isChecked = isChecked;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建购物车的功能类，实现商品的增删改查</p>
+<ul>
+<li>CartProvider.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zxsong.mymall.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.util.SparseArray;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.gson.reflect.TypeToken;</span><br><span class="line"><span class="keyword">import</span> com.zxsong.mymall.bean.ShoppingCart;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by zxsong on 2016/2/29.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CartProvider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String CART_JSON = <span class="string">"cart_json"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> SparseArray&lt;ShoppingCart&gt; datas;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Context mContext;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CartProvider</span><span class="params">(Context mContext)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.mContext = mContext;</span><br><span class="line">        datas = <span class="keyword">new</span> SparseArray&lt;&gt;(<span class="number">10</span>);</span><br><span class="line">        listToSparse();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(ShoppingCart cart)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ShoppingCart temp = datas.get(cart.getId().intValue());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (temp != <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">            temp.setCount(temp.getCount() + <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">            temp = cart;</span><br><span class="line">            temp.setCount(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        datas.put(cart.getId().intValue(), temp);</span><br><span class="line">        commit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updata</span><span class="params">(ShoppingCart cart)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        datas.put(cart.getId().intValue(), cart);</span><br><span class="line">        commit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(ShoppingCart cart)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        datas.delete(cart.getId().intValue());</span><br><span class="line">        commit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;ShoppingCart&gt; <span class="title">getAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> getDataFromLocal();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">commit</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        List&lt;ShoppingCart&gt; carts = sparseToList();</span><br><span class="line">        PreferenceUtils.putString(mContext, CART_JSON, JsonUtils.toJSON(carts));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> List&lt;ShoppingCart&gt; <span class="title">sparseToList</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> size = datas.size();</span><br><span class="line"></span><br><span class="line">        List&lt;ShoppingCart&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(size);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line"></span><br><span class="line">            list.add(datas.valueAt(datas.keyAt(i)));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">listToSparse</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        List&lt;ShoppingCart&gt; carts = getDataFromLocal();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (carts != <span class="keyword">null</span> &amp;&amp; carts.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (ShoppingCart cart : carts) &#123;</span><br><span class="line"></span><br><span class="line">                datas.put(cart.getId().intValue(), cart);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;ShoppingCart&gt; <span class="title">getDataFromLocal</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String json = PreferenceUtils.getString(mContext, CART_JSON);</span><br><span class="line"></span><br><span class="line">        List&lt;ShoppingCart&gt; carts = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (json != <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">            carts = JsonUtils.fromJson(json, <span class="keyword">new</span> TypeToken&lt;List&lt;ShoppingCart&gt;&gt;() &#123;</span><br><span class="line">            &#125;.getType());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> carts;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>给热卖页面中的立即购买Button添加事件监听，将物品添加到购物车</p>
+<ul>
+<li>HWAdapter.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HWAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span>&lt;<span class="title">Wares</span>, <span class="title">BaseViewHolder</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    CartProvider provider;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HWAdapter</span><span class="params">(Context context, List&lt;Wares&gt; datas)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">super</span>(context, R.layout.template_hot_wares, datas);</span><br><span class="line">        provider = <span class="keyword">new</span> CartProvider(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">bindData</span><span class="params">(BaseViewHolder holder, <span class="keyword">final</span> Wares wares)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        SimpleDraweeView simpleDraweeView = (SimpleDraweeView) holder.getView(R.id.drawee_view);</span><br><span class="line">        simpleDraweeView.setImageURI(Uri.parse(wares.getImgUrl()));</span><br><span class="line"></span><br><span class="line">        holder.getTextView(R.id.text_title).setText(wares.getName());</span><br><span class="line">        holder.getTextView(R.id.text_price).setText(<span class="string">"￥"</span> + wares.getPrice());</span><br><span class="line"></span><br><span class="line">        Button button = holder.getButton(R.id.btn_add);</span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">                provider.put(convertData(wares));</span><br><span class="line">                ToastUtils.show(context,<span class="string">"已添加到购物车"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ShoppingCart <span class="title">convertData</span><span class="params">(Wares wares)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ShoppingCart cart = <span class="keyword">new</span> ShoppingCart();</span><br><span class="line"></span><br><span class="line">        cart.setId(wares.getId());</span><br><span class="line">        cart.setDescripition(wares.getDescripition());</span><br><span class="line">        cart.setImgUrl(wares.getImgUrl());</span><br><span class="line">        cart.setName(wares.getName());</span><br><span class="line">        cart.setPrice(wares.getPrice());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> cart;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="显示购物车商品">显示购物车商品</h2><p>由于FragmentTabHost在切换Fragment时，只有第一次创建Fragment，调用onCreatView()的时候会去显示数据，后面再添加的商品，购物车是不显示的，因此在MainActivity中切换Tab的时候监听，当切换到CartFragment的时候，去调用CartFragment的refreshData()方法刷新数据，让购物车同步显示数据。</p>
+<ul>
+<li>MainActivity.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mTabHost.setOnTabChangedListener(<span class="keyword">new</span> TabHost.OnTabChangeListener() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTabChanged</span><span class="params">(String tabId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (tabId == getString(R.string.cart)) &#123;</span><br><span class="line"></span><br><span class="line">                    refreshData();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">refreshData</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (cartFragment == <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">            cartFragment = (CartFragment) getSupportFragmentManager().findFragmentByTag(getString(R.string.cart));</span><br><span class="line">            <span class="keyword">if</span> (cartFragment != <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">                cartFragment.refreshData();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cartFragment.refreshData();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CategoryFragment.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CartFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.toolbar)</span><br><span class="line">    <span class="keyword">private</span> MyToolBar toolBar;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.recycler_view)</span><br><span class="line">    <span class="keyword">private</span> RecyclerView mRecyclerView;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.checkbox_all)</span><br><span class="line">    <span class="keyword">private</span> CheckBox mCheckBox;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.txt_total)</span><br><span class="line">    <span class="keyword">private</span> TextView mTextView;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.btn_order)</span><br><span class="line">    <span class="keyword">private</span> Button mBtnOrder;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.btn_del)</span><br><span class="line">    <span class="keyword">private</span> Button mBtnDel;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> CartAdapter mAdapter;</span><br><span class="line">    <span class="keyword">private</span> CartProvider cartProvider;</span><br><span class="line">    </span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        View view =  inflater.inflate(R.layout.fragment_cart, container, <span class="keyword">false</span>);</span><br><span class="line">        ViewUtils.inject(<span class="keyword">this</span>, view);</span><br><span class="line"></span><br><span class="line">        initToolBar();</span><br><span class="line">        cartProvider = <span class="keyword">new</span> CartProvider(getContext());</span><br><span class="line">        showData();</span><br><span class="line">        <span class="keyword">return</span> view;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initToolBar</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        toolBar.hideSearchView();</span><br><span class="line">        toolBar.showTitleView();</span><br><span class="line">        toolBar.setTitle(R.string.cart);</span><br><span class="line">        toolBar.getRightButton().setVisibility(View.VISIBLE);</span><br><span class="line">        toolBar.setRightButtonText(<span class="string">"编辑"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showData</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        List&lt;ShoppingCart&gt; carts = cartProvider.getAll();</span><br><span class="line"></span><br><span class="line">        mAdapter = <span class="keyword">new</span> CartAdapter(getContext(), carts);</span><br><span class="line">        mRecyclerView.setAdapter(mAdapter);</span><br><span class="line">        mRecyclerView.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(getContext()));</span><br><span class="line">        mRecyclerView.setItemAnimator(<span class="keyword">new</span> DefaultItemAnimator());</span><br><span class="line">        mRecyclerView.addItemDecoration(<span class="keyword">new</span> DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refreshData</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        mAdapter.clearData();</span><br><span class="line">        List&lt;ShoppingCart&gt; carts = cartProvider.getAll();</span><br><span class="line">        mAdapter.addData(carts);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CartAdapter.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CartAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span>&lt;<span class="title">ShoppingCart</span>, <span class="title">BaseViewHolder</span>&gt; <span class="keyword">implements</span> <span class="title">BaseAdapter</span>.<span class="title">OnItemClickListener</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CartAdapter</span><span class="params">(Context context, List&lt;ShoppingCart&gt; datas)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">super</span>(context, R.layout.template_cart, datas);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">bindData</span><span class="params">(BaseViewHolder holder, <span class="keyword">final</span> ShoppingCart cart)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        CheckBox checkBox = (CheckBox) holder.getView(R.id.check_box);</span><br><span class="line">        checkBox.setChecked(cart.isChecked());</span><br><span class="line"></span><br><span class="line">        SimpleDraweeView draweeView = (SimpleDraweeView) holder.getView(R.id.drawee_view);</span><br><span class="line">        draweeView.setImageURI(Uri.parse(cart.getImgUrl()));</span><br><span class="line"></span><br><span class="line">        holder.getTextView(R.id.text_title).setText(cart.getName());</span><br><span class="line">        holder.getTextView(R.id.text_price).setText(<span class="string">"￥"</span> + cart.getPrice());</span><br><span class="line"></span><br><span class="line">        NumberAddSubView numberAddSubView = (NumberAddSubView) holder.getView(R.id.num_control);</span><br><span class="line">        numberAddSubView.setValue(cart.getCount());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果图：</p>
+<p><img src="http://7xpndb.com1.z0.glb.clouddn.com/ShoppingCart1.PNG" alt="购物车1"></p>
+<h2 id="购物车商品选择和总价统计">购物车商品选择和总价统计</h2><h3 id="总价统计">总价统计</h3><p>遍历mDatas中的ShoppingCart,将每个商品的价格和数量相乘并叠加即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showTotalPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">float</span> total = getTotalPrice();</span><br><span class="line">        textView.setText(<span class="string">"合计："</span>+total);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">float</span> <span class="title">getTotalPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">float</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (mDatas == <span class="keyword">null</span> || mDatas.size() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> sum;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (ShoppingCart cart : mDatas</span><br><span class="line">                ) &#123;</span><br><span class="line">            <span class="comment">//只有选择的才加起来</span></span><br><span class="line">            <span class="keyword">if</span> (cart.isChecked()) &#123;</span><br><span class="line"></span><br><span class="line">                sum += cart.getPrice() * cart.getCount();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="商品选择">商品选择</h3><h4 id="增减商品数量">增减商品数量</h4><p>为numberAddSubView添加事件监听，改变商品数量，更新保存在本地的数据，并显示总价</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">numberAddSubView.setOnButtonClickListener(<span class="keyword">new</span> NumberAddSubView.OnButtonClickListener() &#123;</span><br><span class="line">          <span class="annotation">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onButtonAddClick</span><span class="params">(View view, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">              cart.setCount(value);</span><br><span class="line">              provider.updata(cart);</span><br><span class="line">              showTotalPrice();</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="annotation">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onButtonSubClick</span><span class="params">(View view, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">              cart.setCount(value);</span><br><span class="line">              provider.updata(cart);</span><br><span class="line">              showTotalPrice();</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="选择或不选单个商品">选择或不选单个商品</h4><p>实现BaseAdapter.OnItemClickListener接口，重写onItemClick()方法， 选择或不选单个商品，同时当全选中和还没有全选中时，改变全选的checkBox的状态</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">CartAdapter</span><span class="params">(Context context, List&lt;ShoppingCart&gt; datas, <span class="keyword">final</span> CheckBox cb, TextView tv)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">super</span>(context, R.layout.template_cart, datas);</span><br><span class="line">        setCheckBox(cb);</span><br><span class="line">        setTextView(tv);</span><br><span class="line">        provider = <span class="keyword">new</span> CartProvider(context);</span><br><span class="line">        setOnItemClickListener(<span class="keyword">this</span>);</span><br><span class="line">        showTotalPrice();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(View view, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ShoppingCart cart = getItem(position);</span><br><span class="line">        cart.setIsChecked(!cart.isChecked());</span><br><span class="line">        notifyItemChanged(position);</span><br><span class="line">        checkListen();</span><br><span class="line">        showTotalPrice();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">checkListen</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (mDatas != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (ShoppingCart cart : mDatas</span><br><span class="line">                    ) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!cart.isChecked()) &#123;</span><br><span class="line"></span><br><span class="line">                    checkBox.setChecked(<span class="keyword">false</span>);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">                    count += <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (count == mDatas.size()) &#123;</span><br><span class="line"></span><br><span class="line">                checkBox.setChecked(<span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="全选或全不选">全选或全不选</h4><p>为全选checkBox添加点击事件监听，遍历mDatas，改变每个item的checkBox的选择状态与全选checkBox一致。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setCheckBox</span><span class="params">(CheckBox cb)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.checkBox = cb;</span><br><span class="line">       checkBox.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">           <span class="annotation">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">               <span class="keyword">if</span> (mDatas != <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">                   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; mDatas.size(); i++) &#123;</span><br><span class="line"></span><br><span class="line">                       getItem(i).setIsChecked(checkBox.isChecked());</span><br><span class="line">                       notifyItemChanged(i);</span><br><span class="line">                       showTotalPrice();</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>效果图：</p>
+<p><img src="http://7xpndb.com1.z0.glb.clouddn.com/cart.gif" alt="购物车2"></p>
+<h2 id="购物车ToolBar中编辑按钮功能">购物车ToolBar中编辑按钮功能</h2><h3 id="编辑按钮的点击效果">编辑按钮的点击效果</h3><p>当点击编辑按钮时，编辑按钮变成完成按钮，所有商品未选中，隐藏总价显示，结算按钮变成删除按钮，再次点击回复原状。</p>
+<p>为编辑按钮设置两个Tag，分别标记按钮的两种状态，在点击时，进行区分来执行相应的操作。</p>
+<ul>
+<li>CartFragment.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ACTION_EDIT = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ACTION_COMPLETE = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initToolBar</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        toolBar.hideSearchView();</span><br><span class="line">        toolBar.showTitleView();</span><br><span class="line">        toolBar.setTitle(R.string.cart);</span><br><span class="line">        toolBar.getRightButton().setVisibility(View.VISIBLE);</span><br><span class="line">        toolBar.setRightButtonText(<span class="string">"编辑"</span>);</span><br><span class="line"></span><br><span class="line">        toolBar.getRightButton().setOnClickListener(<span class="keyword">this</span>);</span><br><span class="line">        toolBar.getRightButton().setTag(ACTION_EDIT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> action = (<span class="keyword">int</span>) v.getTag();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (action == ACTION_EDIT) &#123;</span><br><span class="line"></span><br><span class="line">        showDeleteBtn();</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (action == ACTION_COMPLETE) &#123;</span><br><span class="line"></span><br><span class="line">        hideDeleteBtn();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showDeleteBtn</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    toolBar.setRightButtonText(<span class="string">"完成"</span>);</span><br><span class="line">    mTextView.setVisibility(View.GONE);</span><br><span class="line">    mBtnOrder.setVisibility(View.GONE);</span><br><span class="line">    mBtnDel.setVisibility(View.VISIBLE);</span><br><span class="line">    mAdapter.checkAllNone(<span class="keyword">false</span>);</span><br><span class="line">    mCheckBox.setChecked(<span class="keyword">false</span>);</span><br><span class="line">    toolBar.getRightButton().setTag(ACTION_COMPLETE);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">hideDeleteBtn</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    toolBar.setRightButtonText(<span class="string">"编辑"</span>);</span><br><span class="line">    mTextView.setVisibility(View.VISIBLE);</span><br><span class="line">    mBtnOrder.setVisibility(View.VISIBLE);</span><br><span class="line">    mBtnDel.setVisibility(View.GONE);</span><br><span class="line">    mAdapter.checkAllNone(<span class="keyword">true</span>);</span><br><span class="line">    mCheckBox.setChecked(<span class="keyword">true</span>);</span><br><span class="line">    toolBar.getRightButton().setTag(ACTION_EDIT);</span><br><span class="line">    mAdapter.showTotalPrice();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除按钮功能的实现">删除按钮功能的实现</h3><p>遍历mDatas，将选中的商品从本地和mDatas中删除，并更新显示。</p>
+<ul>
+<li>CartAdapter.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteCart</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (mDatas != <span class="keyword">null</span> &amp;&amp; mDatas.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//            mDatas.remove(cart)之后，mDatas.size()发生变化，不能再用这种方法遍历</span></span><br><span class="line"><span class="comment">//            for (ShoppingCart cart : mDatas) &#123;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//                if (cart.isChecked()) &#123;</span></span><br><span class="line"><span class="comment">//                    int position = mDatas.indexOf(cart);</span></span><br><span class="line"><span class="comment">//                    provider.delete(cart);</span></span><br><span class="line"><span class="comment">//                    mDatas.remove(cart);</span></span><br><span class="line"><span class="comment">//                    notifyItemRemoved(mDatas.indexOf(cart));</span></span><br><span class="line"><span class="comment">//                &#125;</span></span><br><span class="line"><span class="comment">//            &#125;</span></span><br><span class="line"><span class="comment">//          使用迭代器的方法遍历</span></span><br><span class="line">            Iterator iterator = mDatas.iterator();</span><br><span class="line">            <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line"></span><br><span class="line">                ShoppingCart cart = (ShoppingCart) iterator.next();</span><br><span class="line">                <span class="keyword">if</span> (cart.isChecked()) &#123;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">int</span> position = mDatas.indexOf(cart);</span><br><span class="line">                    provider.delete(cart);</span><br><span class="line">                    iterator.remove();</span><br><span class="line">                    notifyItemRemoved(position);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (mDatas.size() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">            checkBox.setChecked(<span class="keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CartFrament.java</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">switch</span> (v.getId()) &#123;</span><br><span class="line"></span><br><span class="line">           <span class="keyword">case</span> R.id.toolbar_rightButton:</span><br><span class="line">               <span class="keyword">int</span> action = (<span class="keyword">int</span>) v.getTag();</span><br><span class="line"></span><br><span class="line">               <span class="keyword">if</span> (action == ACTION_EDIT) &#123;</span><br><span class="line"></span><br><span class="line">                   showDeleteBtn();</span><br><span class="line"></span><br><span class="line">               &#125; <span class="keyword">else</span> <span class="keyword">if</span> (action == ACTION_COMPLETE) &#123;</span><br><span class="line"></span><br><span class="line">                   hideDeleteBtn();</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">           <span class="keyword">case</span> R.id.btn_del:</span><br><span class="line">               mAdapter.deleteCart();</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>效果图：</p>
+<p><img src="http://7xpndb.com1.z0.glb.clouddn.com/cart2.gif" alt="购物车3"></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/项目/">项目</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android/">Android</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://xuesongzh.github.io/2016/03/02/商城项目开发（六）/" data-title="商城项目开发（六） | zxsong&#39;s blog" data-tsina="2420990051" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/02/24/商城项目开发（五）/"  title="商城项目开发（五）">
+ <strong>下一篇：</strong><br/> 
+ <span>商城项目开发（五）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/03/02/商城项目开发（六）/" data-title="商城项目开发（六）" data-url="http://xuesongzh.github.io/2016/03/02/商城项目开发（六）/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#购物车"><span class="toc-number">1.</span> <span class="toc-text">购物车</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义数字加减控件—组合控件"><span class="toc-number">1.1.</span> <span class="toc-text">自定义数字加减控件—组合控件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#购物车数据存储器"><span class="toc-number">1.2.</span> <span class="toc-text">购物车数据存储器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#显示购物车商品"><span class="toc-number">1.3.</span> <span class="toc-text">显示购物车商品</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#购物车商品选择和总价统计"><span class="toc-number">1.4.</span> <span class="toc-text">购物车商品选择和总价统计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#总价统计"><span class="toc-number">1.4.1.</span> <span class="toc-text">总价统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#商品选择"><span class="toc-number">1.4.2.</span> <span class="toc-text">商品选择</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#增减商品数量"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">增减商品数量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#选择或不选单个商品"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">选择或不选单个商品</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全选或全不选"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">全选或全不选</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#购物车ToolBar中编辑按钮功能"><span class="toc-number">1.5.</span> <span class="toc-text">购物车ToolBar中编辑按钮功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑按钮的点击效果"><span class="toc-number">1.5.1.</span> <span class="toc-text">编辑按钮的点击效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除按钮功能的实现"><span class="toc-number">1.5.2.</span> <span class="toc-text">删除按钮功能的实现</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/教程/" title="教程">教程<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/资源/" title="资源">资源<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/项目/" title="项目">项目<sup>6</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Android/" title="Android">Android<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/编程/" title="编程">编程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.trinea.cn/" target="_blank" title="Trinea">Trinea</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://a.codekk.com/" target="_blank" title="codeKK">codeKK</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://hukai.me/" target="_blank" title="胡凯">胡凯</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.csdn.net/guolin_blog" target="_blank" title="郭霖">郭霖</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m zxsong, a student of SHU. <br/>
+			Think different, Make great products.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/xuesongzh" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/xuesongzh" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="http://www.zhihu.com/people/zhang-xue-song-7" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:zxsong13@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="zxsong">zxsong</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"xuesongzh"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f903dd6a43e7b6e747bc07b7b259abd4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
