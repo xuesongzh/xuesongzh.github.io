@@ -4,22 +4,42 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>zxsong&#39;s blog</title>
+    <title>商城项目开发（七） | zxsong&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="zxsong">
     
 
     
-    <meta name="description" content="This is a Personal Blog for zhangxuesong">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zxsong's blog">
-<meta property="og:url" content="http://xuesongzh.github.io/index.html">
+    <meta name="description" content="商品列表分页工具类封装封装原则1.公共的东西抽出来2.变化的东西由调用者传入3.提供简洁的API
+
+将MaterialRefreshLayout，currPage，pageSize，totalPage，请求的url和参数这些需要改变的变量放到Builder类中，并向外提供set方法。
+定义OnPageListener接口，将showData()中三种状态的具体实现通过监听器的方式提供出去。
+
+Pa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="商城项目开发（七）">
+<meta property="og:url" content="http://xuesongzh.github.io/2016/03/09/商城项目开发（七）/index.html">
 <meta property="og:site_name" content="zxsong's blog">
-<meta property="og:description" content="This is a Personal Blog for zhangxuesong">
+<meta property="og:description" content="商品列表分页工具类封装封装原则1.公共的东西抽出来2.变化的东西由调用者传入3.提供简洁的API
+
+将MaterialRefreshLayout，currPage，pageSize，totalPage，请求的url和参数这些需要改变的变量放到Builder类中，并向外提供set方法。
+定义OnPageListener接口，将showData()中三种状态的具体实现通过监听器的方式提供出去。
+
+Pa">
+<meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/pageUtil.PNG">
+<meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/warelist.PNG">
+<meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/warelist.gif">
+<meta property="og:image" content="http://7xpndb.com1.z0.glb.clouddn.com/warelist2.gif">
+<meta property="og:updated_time" content="2016-03-09T06:49:21.935Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zxsong's blog">
-<meta name="twitter:description" content="This is a Personal Blog for zhangxuesong">
+<meta name="twitter:title" content="商城项目开发（七）">
+<meta name="twitter:description" content="商品列表分页工具类封装封装原则1.公共的东西抽出来2.变化的东西由调用者传入3.提供简洁的API
+
+将MaterialRefreshLayout，currPage，pageSize，totalPage，请求的url和参数这些需要改变的变量放到Builder类中，并向外提供set方法。
+定义OnPageListener接口，将showData()中三种状态的具体实现通过监听器的方式提供出去。
+
+Pa">
 
     
     <link rel="alternative" href="/atom.xml" title="zxsong&#39;s blog" type="application/atom+xml">
@@ -69,12 +89,10 @@
 </div>
     </header>
     <div id="container">
-      <div id="main">
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/2016/03/09/商城项目开发（七）/" title="商城项目开发（七）" itemprop="url">商城项目开发（七）</a>
@@ -88,9 +106,16 @@
     
   </p>
 </header>
-    <div class="article-content">
-        
-        <h1 id="商品列表">商品列表</h1><h2 id="分页工具类封装">分页工具类封装</h2><p><strong>封装原则</strong><br>1.公共的东西抽出来<br>2.变化的东西由调用者传入<br>3.提供简洁的API</p>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#商品列表"><span class="toc-number">1.</span> <span class="toc-text">商品列表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分页工具类封装"><span class="toc-number">1.1.</span> <span class="toc-text">分页工具类封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#商品排序功能实现–TabLayout"><span class="toc-number">1.2.</span> <span class="toc-text">商品排序功能实现–TabLayout</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#商品列表按默认，价格，销量切换排序"><span class="toc-number">1.2.1.</span> <span class="toc-text">商品列表按默认，价格，销量切换排序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#商品列表grid和list模式切换"><span class="toc-number">1.3.</span> <span class="toc-text">商品列表grid和list模式切换</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="商品列表">商品列表</h1><h2 id="分页工具类封装">分页工具类封装</h2><p><strong>封装原则</strong><br>1.公共的东西抽出来<br>2.变化的东西由调用者传入<br>3.提供简洁的API</p>
 <p><img src="http://7xpndb.com1.z0.glb.clouddn.com/pageUtil.PNG" alt="PageUtil"></p>
 <p>将MaterialRefreshLayout，currPage，pageSize，totalPage，请求的url和参数这些需要改变的变量放到Builder类中，并向外提供set方法。</p>
 <p>定义OnPageListener接口，将showData()中三种状态的具体实现通过监听器的方式提供出去。</p>
@@ -122,14 +147,9 @@
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WareListActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">PageUtils</span>.<span class="title">OnPageListener</span>, <span class="title">TabLayout</span></span><br><span class="line">        .<span class="title">OnTabSelectedListener</span>, <span class="title">View</span>.<span class="title">OnClickListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.tab_layout)</span><br><span class="line">    <span class="keyword">private</span> TabLayout mTabLayout;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.txt_summary)</span><br><span class="line">    <span class="keyword">private</span> TextView mTxtSummary;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.recycler_view)</span><br><span class="line">    <span class="keyword">private</span> RecyclerView mRecyclerView;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.refresh_layout)</span><br><span class="line">    <span class="keyword">private</span> MaterialRefreshLayout mRefreshLayout;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@ViewInject</span>(R.id.toolbar)</span><br><span class="line">    <span class="keyword">private</span> MyToolBar mToolBar;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//API的参数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> orderBy = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> campaignId = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义3个Tab</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TAG_DEFAULT = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TAG_SALE = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TAG_PRICE = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义列表的两种切换模式</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ACTION_LIST = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ACTION_GIRD = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> PageUtils pageUtils;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> HWAdapter mAdapter;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_warelist);</span><br><span class="line">        ViewUtils.inject(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">        initToolBar();</span><br><span class="line"></span><br><span class="line">        campaignId = getIntent().getLongExtra(Contants.COMPAINGAIN_ID, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        initTab();</span><br><span class="line">        getData();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initToolBar</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        mToolBar.setNavigationOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">                WareListActivity.<span class="keyword">this</span>.finish();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        mToolBar.setRightButtonIcon(R.drawable.icon_grid_32);</span><br><span class="line">        mToolBar.getRightButton().setTag(ACTION_LIST);</span><br><span class="line">        mToolBar.setRightButtonOnClickListener(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initTab</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        TabLayout.Tab tab = mTabLayout.newTab();</span><br><span class="line">        tab.setText(<span class="string">"默认"</span>);</span><br><span class="line">        tab.setTag(TAG_DEFAULT);</span><br><span class="line"></span><br><span class="line">        mTabLayout.addTab(tab);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        tab = mTabLayout.newTab();</span><br><span class="line">        tab.setText(<span class="string">"价格"</span>);</span><br><span class="line">        tab.setTag(TAG_PRICE);</span><br><span class="line"></span><br><span class="line">        mTabLayout.addTab(tab);</span><br><span class="line"></span><br><span class="line">        tab = mTabLayout.newTab();</span><br><span class="line">        tab.setText(<span class="string">"销量"</span>);</span><br><span class="line">        tab.setTag(TAG_SALE);</span><br><span class="line"></span><br><span class="line">        mTabLayout.addTab(tab);</span><br><span class="line"></span><br><span class="line">        mTabLayout.setOnTabSelectedListener(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        pageUtils = PageUtils.newBuilder()</span><br><span class="line">                .setUrl(Contants.API.WARES_CAMPAIN_LIST)</span><br><span class="line">                .putParam(<span class="string">"campaignId"</span>, campaignId)</span><br><span class="line">                .putParam(<span class="string">"orderBy"</span>, orderBy)</span><br><span class="line">                .setLoadMore(<span class="keyword">true</span>)</span><br><span class="line">                .setRefreshLayout(mRefreshLayout)</span><br><span class="line">                .setOnPageListener(<span class="keyword">this</span>)</span><br><span class="line">                .build(<span class="keyword">this</span>, <span class="keyword">new</span> TypeToken&lt;Page&lt;Wares&gt;&gt;() &#123;</span><br><span class="line">                &#125;.getType());</span><br><span class="line"></span><br><span class="line">        pageUtils.request();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">load</span><span class="params">(List datas, <span class="keyword">int</span> totalPage, <span class="keyword">int</span> totalCount)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        mTxtSummary.setText(<span class="string">"共有"</span> + totalCount + <span class="string">"件商品"</span>);</span><br><span class="line">        <span class="keyword">if</span> (mAdapter == <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">            mAdapter = <span class="keyword">new</span> HWAdapter(<span class="keyword">this</span>, datas);</span><br><span class="line">            mRecyclerView.setAdapter(mAdapter);</span><br><span class="line">            mRecyclerView.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(<span class="keyword">this</span>));</span><br><span class="line">            mRecyclerView.setItemAnimator(<span class="keyword">new</span> DefaultItemAnimator());</span><br><span class="line">            mRecyclerView.addItemDecoration(<span class="keyword">new</span> DividerItemDecoration(<span class="keyword">this</span>, DividerItemDecoration</span><br><span class="line">                    .VERTICAL_LIST));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">            mAdapter.clearData();</span><br><span class="line">            mAdapter.addData(datas);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refresh</span><span class="params">(List datas, <span class="keyword">int</span> totalPage, <span class="keyword">int</span> totalCount)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        mAdapter.addData(datas);</span><br><span class="line">        mRecyclerView.scrollToPosition(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadMore</span><span class="params">(List datas, <span class="keyword">int</span> totalPage, <span class="keyword">int</span> totalCount)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        mAdapter.addData(mAdapter.getDatas().size(), datas);</span><br><span class="line">        mRecyclerView.scrollToPosition(mAdapter.getDatas().size() - datas.size());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTabSelected</span><span class="params">(TabLayout.Tab tab)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        orderBy = (<span class="keyword">int</span>) tab.getTag();</span><br><span class="line">        pageUtils.putParam(<span class="string">"orderBy"</span>, orderBy);</span><br><span class="line">        pageUtils.request();</span><br><span class="line">        mRecyclerView.scrollToPosition(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTabUnselected</span><span class="params">(TabLayout.Tab tab)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTabReselected</span><span class="params">(TabLayout.Tab tab)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> action = (<span class="keyword">int</span>) v.getTag();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (action == ACTION_LIST) &#123;</span><br><span class="line"></span><br><span class="line">            mToolBar.setRightButtonIcon(R.drawable.icon_list_32);</span><br><span class="line">            mToolBar.getRightButton().setTag(ACTION_GIRD);</span><br><span class="line">            mAdapter.resetLayout(R.layout.template_grid_wares);</span><br><span class="line">            mRecyclerView.setLayoutManager(<span class="keyword">new</span> GridLayoutManager(<span class="keyword">this</span>, <span class="number">2</span>));</span><br><span class="line">      <span class="comment">//      mRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));</span></span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (action == ACTION_GIRD) &#123;</span><br><span class="line"></span><br><span class="line">            mToolBar.setRightButtonIcon(R.drawable.icon_grid_32);</span><br><span class="line">            mToolBar.getRightButton().setTag(ACTION_LIST);</span><br><span class="line">            mAdapter.resetLayout(R.layout.template_hot_wares);</span><br><span class="line">            mRecyclerView.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(<span class="keyword">this</span>));</span><br><span class="line">       <span class="comment">//     mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>效果图：<br><img src="http://7xpndb.com1.z0.glb.clouddn.com/warelist2.gif" alt=""></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
+  
+	</div>
+		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
@@ -147,637 +167,47 @@
 
 
 
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://xuesongzh.github.io/2016/03/09/商城项目开发（七）/" data-title="商城项目开发（七） | zxsong&#39;s blog" data-tsina="2420990051" class="share clearfix">
+	  </div>
+	
+	</div>
 
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/03/09/商城项目开发（七）/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/03/09/商城项目开发（七）/" data-count-type="comments">&nbsp;</a>
-	
-</div>
 
 </footer>
 
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/02/商城项目开发（六）/" title="商城项目开发（六）" itemprop="url">商城项目开发（六）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-02T11:07:52.000Z" itemprop="datePublished"> 发表于 2016-03-02</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="购物车">购物车</h1><h2 id="自定义数字加减控件—组合控件">自定义数字加减控件—组合控件</h2><p>1.输入框只能是数字，且不能通过键盘输入<br>2.通过加减按钮操作数字<br>3.监听加减按钮<br>4.数字有最小值和最大值的限制<br>5.自定义属性</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2016/03/02/商城项目开发（六）/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/项目/">项目</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Android/">Android</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
+   	       
+	</article>
 	
-	  	<span></span>
-		<a href="/2016/03/02/商城项目开发（六）/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/03/02/商城项目开发（六）/" data-count-type="comments">&nbsp;</a>
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/03/02/商城项目开发（六）/"  title="商城项目开发（六）">
+ <strong>下一篇：</strong><br/> 
+ <span>商城项目开发（六）
+</span>
+</a>
+</div>
+
+</nav>
+
 	
-</div>
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/03/09/商城项目开发（七）/" data-title="商城项目开发（七）" data-url="http://xuesongzh.github.io/2016/03/09/商城项目开发（七）/"></div>
+</section>
 
-</footer>
 
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/02/24/商城项目开发（五）/" title="商城项目开发（五）" itemprop="url">商城项目开发（五）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
-		
-  <p class="article-time">
-    <time datetime="2016-02-24T09:38:35.000Z" itemprop="datePublished"> 发表于 2016-02-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="分类">分类</h1><h2 id="Adapter封装">Adapter封装</h2><p>1.数据使用泛型<br>2.数据绑定通过实现抽象方法来实现<br>3.ViewHolder中的View成员变量通过view数组来实现<br>4.基类里面提供常用的方法</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2016/02/24/商城项目开发（五）/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/项目/">项目</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Android/">Android</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/02/24/商城项目开发（五）/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/02/24/商城项目开发（五）/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/02/23/商城项目开发（四）/" title="商城项目开发（四）" itemprop="url">商城项目开发（四）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
-		
-  <p class="article-time">
-    <time datetime="2016-02-23T04:55:29.000Z" itemprop="datePublished"> 发表于 2016-02-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="热卖">热卖</h1><h2 id="Fresco">Fresco</h2><h3 id="1-Fresco_介绍">1.Fresco 介绍</h3><p>Fresco是目前最强大的图片加载组件。<br>Fresco中设计有一个叫做image pipeline的模块。它负责从网络，从本地文件系统，本地资源加载图片。 为了最大限度节省空间和CPU时间，它含有3级缓存设计（2级内存，1级文件）。</p>
-<p>Fresco中设计有一个叫做Drawees模块，方便地显示loading图，当图片不再显示在屏幕上时，及时地释放内存和空间占用。</p>
-<p>Fresco支持Android2.3(API level 9)及其以上系统。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2016/02/23/商城项目开发（四）/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/项目/">项目</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Android/">Android</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/02/23/商城项目开发（四）/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/02/23/商城项目开发（四）/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/02/22/商城项目开发（三）/" title="商城项目开发（三）" itemprop="url">商城项目开发（三）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
-		
-  <p class="article-time">
-    <time datetime="2016-02-22T07:09:35.000Z" itemprop="datePublished"> 发表于 2016-02-22</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="首页重构">首页重构</h1><h2 id="Android网络请求">Android网络请求</h2><h3 id="Android_中网络请求的进化">Android 中网络请求的进化</h3><p><img src="http://7xpndb.com1.z0.glb.clouddn.com/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82.PNG" alt="Android网络请求"><br>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2016/02/22/商城项目开发（三）/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/项目/">项目</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Android/">Android</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/02/22/商城项目开发（三）/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/02/22/商城项目开发（三）/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/02/20/商城项目开发（二）/" title="商城项目开发（二）" itemprop="url">商城项目开发（二）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
-		
-  <p class="article-time">
-    <time datetime="2016-02-20T07:37:13.000Z" itemprop="datePublished"> 发表于 2016-02-20</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="第一个Tab—首页的实现">第一个Tab—首页的实现</h1><h2 id="自动轮播图片">自动轮播图片</h2><p>使用<a href="https://github.com/daimajia/AndroidImageSlider">AndroidImageSlider</a>开源项目</p>
-<h3 id="基本使用">基本使用</h3><ul>
-<li>fragment_home.xml</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">LinearLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">              <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">              <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">              <span class="attribute">android:orientation</span>=<span class="value">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">com.daimajia.slider.library.SliderLayout</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/slider"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"200dp"</span></span><br><span class="line">        /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2016/02/20/商城项目开发（二）/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/项目/">项目</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Android/">Android</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/02/20/商城项目开发（二）/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/02/20/商城项目开发（二）/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/01/21/编程入门指南/" title="编程入门指南" itemprop="url">编程入门指南</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
-		
-  <p class="article-time">
-    <time datetime="2016-01-21T13:28:30.000Z" itemprop="datePublished"> 发表于 2016-01-21</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>本文是对知乎上萧井陌大神的<a href="http://zhuanlan.zhihu.com/xiao-jing-mo/19959253">编程入门指南</a>的整理，希望给自己和所有想学编程的人一个清晰的教程。</p>
-<h1 id="启蒙">启蒙</h1><blockquote>
-<ul>
-<li><a href="http://www.xuetangx.com/courses/course-v1:MITx+6_00_1x+2015_T1/courseware/Week_1/">MIT计算机导论课</a></li>
-<li><a href="http://open.163.com/special/opencourse/cs50.html">Harvard CS50</a></li>
-<li><a href="http://book.douban.com/subject/1024570/">《编码的奥秘》</a></li>
-<li><a href="http://book.douban.com/subject/1784887/">《Hacker’s Delight》</a></li>
-</ul>
-</blockquote>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2016/01/21/编程入门指南/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/教程/">教程</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/编程/">编程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/01/21/编程入门指南/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/01/21/编程入门指南/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/01/06/商城项目开发（一）/" title="商城项目开发（一）" itemprop="url">商城项目开发（一）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
-		
-  <p class="article-time">
-    <time datetime="2016-01-06T14:48:38.000Z" itemprop="datePublished"> 发表于 2016-01-06</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>从今天起开始开发一个商城项目，记录下开发过程。代码见<a href="https://github.com/xuesongzh/MyMall">MyMall</a>。</p>
-<hr>
-<h1 id="1-fragmentTabHost实现底部菜单">1.fragmentTabHost实现底部菜单</h1><h2 id="创建修改过的FragmentTabHost，保存fragment实例不销毁，放到widget包中">创建修改过的FragmentTabHost，保存fragment实例不销毁，放到widget包中</h2><p>FragmentTabHost：</p>
-<p><img src="http://7xpndb.com1.z0.glb.clouddn.com/FragmentTabHost.png" alt="FragmentTabHost"></p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2016/01/06/商城项目开发（一）/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/项目/">项目</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Android/">Android</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/01/06/商城项目开发（一）/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/01/06/商城项目开发（一）/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/12/23/Git简明教程/" title="Git简明教程" itemprop="url">Git简明教程</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
-		
-  <p class="article-time">
-    <time datetime="2015-12-23T13:00:29.000Z" itemprop="datePublished"> 发表于 2015-12-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>此教程源于<a href="http://blog.csdn.net/guolin_blog">郭霖</a>的《第一行代码–Android》中关于Git的教程，简单实用，故总结一下。</p>
-<h1 id="Git入门">Git入门</h1><h3 id="安装Git">安装Git</h3><ul>
-<li>Linux<br>打开shell界面<blockquote>
-<p>sudo apt-get install git-core</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="创建代码仓库">创建代码仓库</h3><ul>
-<li>1.配置身份<blockquote>
-<p>git config –global user.name “zxsong”<br>git config –global user.email “zxsong13@gmail.com”</p>
-</blockquote>
-</li>
-</ul>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/12/23/Git简明教程/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/教程/">教程</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Git/">Git</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/12/23/Git简明教程/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/12/23/Git简明教程/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/12/06/Android学习资源整理/" title="Android学习资源整理" itemprop="url">Android学习资源整理</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zxsong" target="_blank" itemprop="author">zxsong</a>
-		
-  <p class="article-time">
-    <time datetime="2015-12-06T09:06:37.000Z" itemprop="datePublished"> 发表于 2015-12-06</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>本文对自从学习Android以来，找到的学习资料进行整理，以Android为主，也涉及其他技术，方便以后查阅。</p>
-<h1 id="Android官方资料">Android官方资料</h1><h2 id="网站">网站</h2><p><a href="http://www.android.com/">Android 官网</a><br><a href="http://developer.android.com/">Android 开发者官网</a><br><a href="https://www.google.com/design/">Google Design</a><br><a href="http://tools.android.com/">Android Tools Project Site</a><br><a href="http://source.android.com/">Android Open Source Project</a><br><a href="https://code.google.com/p/android/issues/list">Android Open Source Project - Issue Tracker</a><br><a href="https://android-review.googlesource.com/">Android Code Review</a><br><a href="https://events.google.com/">Google I/O</a><br><a href="http://android.github.io/">github.com/android</a><br>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/12/06/Android学习资源整理/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/资源/">资源</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Android/">Android</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/12/06/Android学习资源整理/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/12/06/Android学习资源整理/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-  <nav id="page-nav" class="clearfix">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
-  </nav>
-
-</div>
+</div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#商品列表"><span class="toc-number">1.</span> <span class="toc-text">商品列表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分页工具类封装"><span class="toc-number">1.1.</span> <span class="toc-text">分页工具类封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#商品排序功能实现–TabLayout"><span class="toc-number">1.2.</span> <span class="toc-text">商品排序功能实现–TabLayout</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#商品列表按默认，价格，销量切换排序"><span class="toc-number">1.2.1.</span> <span class="toc-text">商品列表按默认，价格，销量切换排序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#商品列表grid和list模式切换"><span class="toc-number">1.3.</span> <span class="toc-text">商品列表grid和list模式切换</span></a></li></ol></li></ol>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -944,6 +374,11 @@ $(document).ready(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
   
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
   $(window).resize(function(){
     getSize(); 
     if (myWidth >= 1024) {
@@ -952,12 +387,89 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
 });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
 
 
 
@@ -1040,4 +552,4 @@ var _hmt = _hmt || [];
 <!-- Tiny_search End -->
 
   </body>
- </html>
+</html>
